@@ -9,7 +9,7 @@
     margin: 0 auto;
     background-color: transparent;
     border: transparent;
-    border-bottom: solid 2px #34495e;
+    border-bottom: solid 2px #a3a546;
     padding-bottom: 8px;
     width: 25%;
     font-weight: 200;
@@ -29,6 +29,6 @@
     position: absolute;
     top: 4px;
     background: transparent;
-    border: solid 2px #34495e;
+    border: solid 2px #a3a546;
     color: #fff;
 }
