@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import ImageSearch from './ImageSearch/ImageSearch'
+import ImageList from './ImageList/ImageList'
+import "./styles/styles.css"
+
+const KEY = `${process.env.REACT_APP_API_KEY}`;
 
 function App() {
+
+  const [pics, setPics] = useState([]);
+  const [error, setError] = useState(null);
+
+
+  const fetchPics = async (e) => {
+    e.preventDefault();
+    const QUERY = e.target.elements.searchValue.value
+    const URL = `https://pixabay.com/api/?key=${KEY}&q=${QUERY}&image_type=photo`
+    const response = await fetch(URL);
+    const data = await response.json();
+
+    if (!QUERY) {
+      setError('Enter a search term')
+    } else {
+      setPics(data.hits)
+      setError(null)
+    }
+
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ImageSearch fetchPics={fetchPics} />
+
+      {
+        error !== null ?
+          <div style={{ color: '#fff', textAlign: 'center' }}>{error}</div> :
+          <ImageList pics={pics} />
+      }
     </div>
   );
 }
